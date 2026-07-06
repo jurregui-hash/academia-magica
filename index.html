@@ -7440,9 +7440,21 @@ function CelebrationScreen({ mission, problemIndex, onNext, isLast, potionComple
 //  SCREEN: MISSION COMPLETE
 // ═══════════════════════════════════════════════════════
 
-function MissionCompleteScreen({ mission, onRepeat, onHome, potionCompleted }) {
+function MissionCompleteScreen({ mission, onRepeat, onHome, onViewCollection, potionCompleted }) {
   const isPocionMision = mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12';
   const allPotionsDone = isPocionMision && potionCompleted && potionCompleted.size >= mission.problems.length;
+  const card = MAGIC_CARDS.find(c => c.missionId === mission.id);
+  const [showConfetti, setShowConfetti] = React.useState(false);
+
+  React.useEffect(() => {
+    // Unlock the magic card for this mission
+    if (card) {
+      unlockCard(card.id);
+      setShowConfetti(true);
+      const t = setTimeout(() => setShowConfetti(false), 3500);
+      return () => clearTimeout(t);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (allPotionsDone) {
@@ -7457,6 +7469,7 @@ function MissionCompleteScreen({ mission, onRepeat, onHome, potionCompleted }) {
 
   return (
     <Wrap>
+      {showConfetti && <Confetti />}
       <div className="anim-scaleIn" style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'24px', paddingTop:'18px' }}>
 
         <div style={{ display:'flex', gap:'12px', fontSize:'1.8rem' }}>
@@ -7473,6 +7486,26 @@ function MissionCompleteScreen({ mission, onRepeat, onHome, potionCompleted }) {
             Has resuelto los <strong>{mission.problems.length} problemas</strong><br/>de la misión. ¡Eres increíble!
           </p>
         </div>
+
+        {/* Cromo desbloqueado */}
+        {card && (
+          <div style={{ width:'100%' }}>
+            <div style={{
+              textAlign:'center',
+              background:'linear-gradient(135deg,rgba(196,147,58,.15),rgba(196,147,58,.05))',
+              border:'1px solid rgba(196,147,58,.35)',
+              borderRadius:'14px 14px 0 0',
+              padding:'10px',
+            }}>
+              <p className="font-magic" style={{ color:'#C4933A', fontSize:'.72rem', letterSpacing:'3px', margin:0 }}>
+                ✦ NUEVO CROMO MÁGICO DESBLOQUEADO ✦
+              </p>
+            </div>
+            <div className="anim-card-reveal" style={{ marginTop:'-1px' }}>
+              <MagicCard card={card} unlocked size="large" />
+            </div>
+          </div>
+        )}
 
         <div style={{ background:'linear-gradient(135deg,#7B1B1B,#9B2525)', border:'2px solid #C4933A', borderRadius:'18px', padding:'26px 24px', textAlign:'center', width:'100%', color:'#F5E8C0' }}>
           <p style={{ margin:'0 0 8px', fontSize:'.82rem', letterSpacing:'2px', opacity:.8 }}>🪄 HECHIZO APRENDIDO</p>
@@ -7532,7 +7565,12 @@ function MissionCompleteScreen({ mission, onRepeat, onHome, potionCompleted }) {
         </div>
 
         <div style={{ display:'flex', flexDirection:'column', gap:'12px', width:'100%' }}>
-          <button className="btn-main" onClick={onRepeat} style={{ padding:'16px' }}>🔄 Repetir misión</button>
+          {onViewCollection && (
+            <button className="btn-main" onClick={onViewCollection} style={{ padding:'16px', fontSize:'1.05rem' }}>
+              📚 Ver mi colección
+            </button>
+          )}
+          <button className="btn-ghost" onClick={onRepeat} style={{ width:'100%' }}>🔄 Repetir misión</button>
           <button className="btn-ghost" onClick={onHome} style={{ width:'100%' }}>🏠 Volver al inicio</button>
         </div>
       </div>
@@ -8394,7 +8432,7 @@ function App() {
       {screen === 'celebration'  && <CelebrationScreen   mission={mission} problemIndex={probIdx} isLast={probIdx + 1 >= mission.problems.length} onNext={afterCelebration} potionCompleted={potionCompleted} />}
       {screen === 'mesa-pociones'&& <PotionWorkbenchScreen mission={mission} problemIndex={probIdx} onContinue={afterMesaPociones} />}
       {screen === 'reward'       && (mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12')
-        ? <MissionCompleteScreen mission={mission} onRepeat={beginProblems} onHome={home} potionCompleted={potionCompleted} />
+        ? <MissionCompleteScreen mission={mission} onRepeat={beginProblems} onHome={home} onViewCollection={() => setScreen('collection')} potionCompleted={potionCompleted} />
         : screen === 'reward' && <RewardScreen missionId={mission.id} onViewCollection={() => setScreen('collection')} onHome={home} />}
       {screen === 'collection'   && <CollectionScreen    onBack={() => setScreen('home')} onCastle={() => setScreen('castle')} />}
       {screen === 'castle'       && <CastleScreen        onBack={() => setScreen('home')} />}
