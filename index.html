@@ -2586,7 +2586,164 @@ const MISSION_DAY11 = {
   problems: PROBLEMS_DAY11,
 };
 
-const MISSIONS = [MISSION_DAY1, MISSION_DAY2, MISSION_DAY3, MISSION_DAY4, MISSION_DAY5, MISSION_DAY6, MISSION_DAY7, MISSION_DAY8, MISSION_DAY9, MISSION_DAY10, MISSION_DAY11];
+// ── DÍA 12: COMPRAS MÁGICAS Y COMPROBACIONES ────────────────
+const PROBLEMS_DAY12 = [
+  {
+    id: 'p12-1', tipo: 'dia12', icono: '🎂',
+    titulo: 'El cumpleaños mágico de Ana',
+    enunciado: 'Para celebrar su cumpleaños, Ana ha sacado 35 galeones de su hucha.\n\nSu padre le ha dado 30 galeones más.\n\nAna ha invitado a 4 amigas a unos sándwiches mágicos que cuestan 3 galeones cada uno.\n\nDespués, paga la entrada al cine mágico para ella y sus 4 amigas.\n\nCada entrada cuesta 6 galeones.',
+    fases: [
+      {
+        tipo: 'calculo',
+        pregunta: '¿Cuánto dinero lleva Ana?',
+        contexto: 'Ana sacó 35 galeones de su hucha y su padre le dio 30 galeones más.',
+        resultado: 65,
+        guardado: '65 galeones al principio',
+        ingredienteIdx: 0,
+        hints: ['Busca el dinero que Ana tenía y el dinero que le da su padre.','La pregunta quiere saber cuánto dinero lleva en total.','Cuando juntas dinero de dos sitios, piensa qué operación necesitas.'],
+      },
+      {
+        tipo: 'calculo',
+        pregunta: '¿Cuánto ha gastado en los sándwiches?',
+        contexto: 'Ana invita a 4 amigas. Cada sándwich cuesta 3 galeones.',
+        resultado: 12,
+        guardado: '12 galeones en sándwiches',
+        ingredienteIdx: 1,
+        hints: ['La pregunta habla solo de los sándwiches.','Mira cuántas amigas invita y cuánto cuesta cada sándwich.','Si varios sándwiches cuestan lo mismo, piensa en grupos iguales.'],
+      },
+      {
+        tipo: 'calculo',
+        pregunta: '¿Cuánto ha gastado en las entradas para el cine?',
+        contexto: 'Van Ana y sus 4 amigas al cine. Cada entrada cuesta 6 galeones.',
+        resultado: 30,
+        guardado: '30 galeones en entradas',
+        ingredienteIdx: 2,
+        hints: ['No olvides contar a Ana además de sus amigas.','Van Ana y sus 4 amigas — son 5 en total.','Mira cuántas entradas hay y cuánto cuesta cada una.'],
+      },
+      {
+        tipo: 'calculo',
+        pregunta: '¿Cuánto ha gastado en total?',
+        contexto: 'Usa los dos gastos que ya tienes guardados.',
+        resultado: 42,
+        guardado: '42 galeones gastados en total',
+        ingredienteIdx: 3,
+        hints: ['Ahora junta los dos gastos.','Usa los resultados que ya tienes guardados.','El gasto total incluye sándwiches y entradas.'],
+      },
+      {
+        tipo: 'calculo',
+        pregunta: '¿Cuánto dinero le sobra a Ana?',
+        contexto: 'Usa el dinero que llevaba al principio y lo que gastó en total.',
+        resultado: 23,
+        guardado: '23 galeones sobrantes',
+        hints: ['Esta pregunta habla de lo que sobra.','Vuelve al dinero que llevaba al principio.','Quita el gasto total.'],
+      },
+      {
+        tipo: 'sino',
+        pregunta: '¿Podrá Ana invitar a sus 4 amigas a un helado mágico de 2 galeones cada uno?',
+        contexto: 'Hay 4 amigas. Cada helado cuesta 2 galeones. A Ana le sobran 23 galeones.',
+        respuestaCorrecta: 'si',
+        guardado: 'Sí puede invitar a los helados',
+        hints: ['Primero calcula cuánto cuestan todos los helados.','Mira cuántas amigas son y cuánto cuesta cada helado.','Compara ese gasto con el dinero que le sobra.'],
+      },
+      {
+        tipo: 'calculo',
+        pregunta: '¿Cuánto le sobrará después de pagar los helados?',
+        contexto: 'A Ana le sobran 23 galeones. Los helados de las 4 amigas cuestan 8 galeones.',
+        resultado: 15,
+        guardado: '15 galeones al final',
+        hints: ['Ya sabes cuánto dinero le sobra antes de los helados.','Ya sabes cuánto cuestan los helados.','Para saber lo que queda después, quita el gasto de los helados.'],
+      },
+    ],
+    respuestaFinal: 'Después de comprar los helados, a Ana le sobrarán 15 galeones.',
+    ingredientes: [
+      { nombre:'Moneda de cumpleaños', emoji:'🪙', color:'#F59E0B' },
+      { nombre:'Pan de calabaza',       emoji:'🥪', color:'#10B981' },
+      { nombre:'Entrada dorada',        emoji:'🎫', color:'#FBBF24' },
+      { nombre:'Pergamino de gasto',    emoji:'📜', color:'#8B5CF6' },
+    ],
+    miniPocionNombre: 'Poción del Cumpleaños Mágico',
+  },
+  {
+    id: 'p12-2', tipo: 'dia12', icono: '👖',
+    titulo: 'Los pantalones de Hogsmeade',
+    enunciado: 'Raquel va a Hogsmeade con 150 galeones.\n\nCompra 3 pantalones mágicos.\n\nCada pantalón cuesta 45 galeones.\n\n¿Cuánto dinero le sobrará a Raquel? ¿Podrá además comprar dos pares de calcetines a 6 galeones el par?',
+    fases: [
+      {
+        tipo: 'confirmar-datos',
+        pregunta: '¿Qué datos son importantes para resolver este problema?',
+        datos: ['Raquel tiene 150 galeones','Compra 3 pantalones','Cada pantalón cuesta 45 galeones'],
+        ingredienteIdx: 0,
+        hints: ['Busca cuánto dinero tiene Raquel.','Busca cuántos pantalones compra.','Busca cuánto cuesta cada pantalón.'],
+      },
+      {
+        tipo: 'calculo',
+        pregunta: '¿Cuánto dinero gasta Raquel en los pantalones?',
+        contexto: '3 pantalones a 45 galeones cada uno.',
+        resultado: 135,
+        guardado: '135 galeones gastados en pantalones',
+        ingredienteIdx: 1,
+        hints: ['La pregunta habla solo de los pantalones.','Mira cuántos pantalones compra.','Todos los pantalones cuestan lo mismo.'],
+      },
+      {
+        tipo: 'calculo',
+        pregunta: '¿Cuánto dinero le queda a Raquel?',
+        contexto: 'Raquel tenía 150 galeones y ya sabes cuánto gastó.',
+        resultado: 15,
+        guardado: '15 galeones restantes',
+        ingredienteIdx: 2,
+        hints: ['Para saber lo que queda, vuelve al dinero inicial.','Quita lo que ha gastado en pantalones.','No calcules de nuevo — ya tienes el gasto guardado.'],
+      },
+      {
+        tipo: 'comprobar',
+        pregunta: '¿La solución encaja? Si sumas lo que le queda y lo que gastó, ¿vuelves a los 150 galeones?',
+        contexto: 'Lo que gastó + lo que le queda debe ser igual al dinero inicial.',
+        respuestaCorrecta: 'si',
+        guardado: 'Comprobación correcta ✓',
+        ingredienteIdx: 3,
+        hints: ['Para comprobar, suma lo que gastó y lo que le quedó.','El resultado debería ser el dinero que tenía al principio.','Si vuelve a 150 galeones, la solución es correcta.'],
+      },
+      {
+        tipo: 'sino',
+        pregunta: '¿Podrá Raquel comprarse dos pares de calcetines mágicos a 6 galeones el par?',
+        contexto: 'Le sobran 15 galeones. Dos pares de calcetines a 6 galeones el par.',
+        respuestaCorrecta: 'si',
+        hints: ['Primero calcula cuánto cuestan dos pares.','Luego compara ese gasto con lo que le sobra.','Si tiene suficiente dinero, la respuesta es sí.'],
+      },
+      {
+        tipo: 'porque',
+        pregunta: '¿Por qué puede comprarse los calcetines?',
+        opciones: [
+          'Porque tiene 15 galeones y los calcetines cuestan 12 galeones.',
+          'Porque los calcetines están rebajados a 3 galeones.',
+          'Porque tiene exactamente el dinero justo sin que sobre nada.',
+        ],
+        opcionCorrecta: 0,
+        hints: ['Explica comparando el dinero que le sobra con lo que cuestan los calcetines.','No basta con decir sí — hay que explicar por qué.','Mira si 15 galeones alcanzan para pagar 12 galeones.'],
+      },
+    ],
+    respuestaFinal: 'Sí puede comprarlos, porque le sobran 15 galeones y los calcetines cuestan solo 12.',
+    ingredientes: [
+      { nombre:'Etiqueta de precio',     emoji:'🏷️', color:'#3B82F6' },
+      { nombre:'Botón encantado',        emoji:'🔘', color:'#8B5CF6' },
+      { nombre:'Moneda restante',        emoji:'🪙', color:'#F59E0B' },
+      { nombre:'Sello de comprobación',  emoji:'✅', color:'#10B981' },
+    ],
+    miniPocionNombre: 'Poción de la Compra Comprobada',
+  },
+];
+
+const MISSION_DAY12 = {
+  id: 'dia12', numero: 'Día 12',
+  titulo: 'Compras mágicas y comprobaciones',
+  objetivo: 'Resolver problemas de dinero paso a paso y comprobar que la respuesta tiene sentido.',
+  descripcion: 'Calcula gastos, descubre cuánto sobra y comprueba que tu solución es correcta.',
+  hechizo: 'Calculo, compruebo y decido',
+  mensajeFinal: '¡Has aprendido a calcular gastos, saber cuánto sobra y comprobar la solución!',
+  insignia: '🪣', cardId: 'caldero-comprobacion',
+  problems: PROBLEMS_DAY12,
+};
+
+const MISSIONS = [MISSION_DAY1, MISSION_DAY2, MISSION_DAY3, MISSION_DAY4, MISSION_DAY5, MISSION_DAY6, MISSION_DAY7, MISSION_DAY8, MISSION_DAY9, MISSION_DAY10, MISSION_DAY11, MISSION_DAY12];
 
 // ── CROMOS MÁGICOS ──────────────────────────────────────────
 const MAGIC_CARDS = [
@@ -2743,6 +2900,17 @@ const MAGIC_CARDS = [
     missionId: 'dia10',
     bgFrom: '#1A003A', bgTo: '#2A1050',
     accentColor: '#C86BDE',
+  },
+  {
+    id: 'caldero-comprobacion',
+    name: 'Caldero de la Comprobación',
+    rarity: 'Raro',
+    rarityKey: 'raro',
+    description: 'Te ayuda a comprobar si una respuesta tiene sentido antes de darla por buena.',
+    icon: '🪣',
+    missionId: 'dia12',
+    bgFrom: '#0A2A1A', bgTo: '#103A22',
+    accentColor: '#4ADE80',
   },
 ];
 
@@ -5749,6 +5917,384 @@ function StepCalculoEncadenado({ problem, onNext, onSave, onFaseComplete }) {
 }
 
 // ═══════════════════════════════════════════════════════
+//  DÍA 12 — STEP COMPONENTS
+// ═══════════════════════════════════════════════════════
+
+// Panel de resultados guardados — se va llenando fase a fase
+function ResultadosGuardados12({ guardados }) {
+  const [open, setOpen] = React.useState(true);
+  if (!guardados || guardados.length === 0) return null;
+  return (
+    <div style={{ background:'rgba(123,27,27,.04)', border:'1px solid rgba(123,27,27,.18)', borderRadius:'12px', overflow:'hidden' }}>
+      <button onClick={() => setOpen(v => !v)} style={{
+        width:'100%', padding:'10px 14px', background:'none', border:'none',
+        display:'flex', alignItems:'center', justifyContent:'space-between', cursor:'pointer',
+      }}>
+        <span style={{ color:'#7B1B1B', fontSize:'.75rem', fontWeight:700, letterSpacing:'1px' }}>
+          📋 GUARDADO ({guardados.length})
+        </span>
+        <span style={{ color:'#C4933A', fontSize:'.8rem' }}>{open ? '▲' : '▼'}</span>
+      </button>
+      {open && (
+        <div style={{ padding:'0 14px 12px', display:'flex', flexDirection:'column', gap:'4px' }}>
+          {guardados.map((g, i) => (
+            <p key={i} style={{ margin:'2px 0', fontSize:'.83rem', color:'#1A5A2A', fontWeight:700 }}>✓ {g}</p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Cálculo — número input, sin mostrar la operación
+function StepCalcDia12({ fase, enunciado, onCorrect }) {
+  const [val, setVal]     = React.useState('');
+  const [status, setStatus] = React.useState('idle');
+  const [tries, setTries] = React.useState(0);
+  const [showEnunciado, setShowEnunciado] = React.useState(false);
+  const inputRef = React.useRef(null);
+  React.useEffect(() => { setTimeout(() => { if (inputRef.current) inputRef.current.focus(); }, 80); }, []);
+
+  function check() {
+    const n = parseInt(val, 10);
+    if (n === fase.resultado) { setStatus('correct'); setTimeout(onCorrect, 900); }
+    else { setTries(t => t+1); setStatus('wrong'); }
+  }
+  const errMsg = tries <= 1 ? 'Ese no es. Revisa tu cálculo.'
+    : tries === 2 ? 'Vamos a revisarlo con calma.'
+    : 'Puedes pedir una pista a la lechuza.';
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+      <button className="btn-ghost" onClick={() => setShowEnunciado(v => !v)} style={{ width:'100%', fontSize:'.82rem' }}>
+        📖 {showEnunciado ? 'Ocultar el problema' : 'Volver a leer el problema'}
+      </button>
+      {showEnunciado && (
+        <div className="card anim-fadeIn" style={{ padding:'14px', whiteSpace:'pre-line', background:'rgba(255,251,240,.95)' }}>
+          <p style={{ color:'#4A2C0A', lineHeight:1.7, margin:0, fontSize:'.88rem' }}>{enunciado}</p>
+        </div>
+      )}
+      {fase.contexto && (
+        <div style={{ background:'rgba(196,147,58,.08)', border:'1px solid rgba(196,147,58,.3)', borderRadius:'12px', padding:'12px 14px' }}>
+          <p style={{ color:'#6B4A20', fontSize:'.88rem', margin:0, lineHeight:1.5, fontWeight:600 }}>💡 {fase.contexto}</p>
+        </div>
+      )}
+      <div className="card" style={{ padding:'16px', textAlign:'center' }}>
+        <p style={{ color:'#4A2C0A', fontSize:'1rem', margin:0, fontWeight:700, lineHeight:1.6 }}>{fase.pregunta}</p>
+      </div>
+      <div style={{ background:'rgba(255,255,255,.65)', border:'2px dashed rgba(196,147,58,.55)', borderRadius:'14px', padding:'14px', textAlign:'center' }}>
+        <p style={{ color:'#C4933A', fontSize:'.72rem', letterSpacing:'2px', margin:'0 0 4px', fontWeight:700 }}>✏️ HAZLO EN TU PAPEL</p>
+        <p style={{ color:'#B0A08A', fontSize:'.82rem', margin:0, fontStyle:'italic' }}>Piensa qué operación necesitas y resuélvela en papel.</p>
+      </div>
+      <div className="card" style={{ padding:'16px', textAlign:'center' }}>
+        <p style={{ color:'#6B4A20', fontSize:'.88rem', margin:'0 0 10px', fontWeight:700 }}>¿Cuál es el resultado?</p>
+        <input ref={inputRef} type="number"
+          className={`magic-input${status === 'correct' ? ' ok' : status === 'wrong' ? ' err' : ''}`}
+          value={val} onChange={e => { setVal(e.target.value); setStatus('idle'); }}
+          onKeyDown={e => e.key === 'Enter' && val && status !== 'correct' && check()}
+          placeholder="?" disabled={status === 'correct'}
+          style={{ width:'100%', maxWidth:'200px', fontSize:'1.8rem', textAlign:'center' }} />
+      </div>
+      {status === 'correct' && (
+        <div className="fb-ok anim-scaleIn">
+          <span style={{ fontSize:'1.2rem' }}>🌟</span>
+          <p style={{ margin:0 }}>¡Correcto! El resultado es {fase.resultado}.</p>
+        </div>
+      )}
+      {status === 'wrong' && (
+        <>
+          <div className="fb-err anim-scaleIn">
+            <span style={{ fontSize:'1.2rem' }}>💫</span>
+            <p style={{ margin:0 }}>{errMsg}</p>
+          </div>
+          <button className="btn-ghost" onClick={() => { setVal(''); setStatus('idle'); }} style={{ width:'100%' }}>🔄 Intentarlo otra vez</button>
+        </>
+      )}
+      <LechuzaDia11 hints={fase.hints} />
+      {status !== 'correct' && (
+        <button className="btn-main" onClick={check} disabled={!val.trim()} style={{ padding:'14px' }}>✓ Comprobar</button>
+      )}
+    </div>
+  );
+}
+
+// Confirmar datos — tarjetas con los datos del problema
+function StepConfirmarDatos12({ fase, enunciado, onCorrect }) {
+  const [showEnunciado, setShowEnunciado] = React.useState(false);
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+      <button className="btn-ghost" onClick={() => setShowEnunciado(v => !v)} style={{ width:'100%', fontSize:'.82rem' }}>
+        📖 {showEnunciado ? 'Ocultar el problema' : 'Volver a leer el problema'}
+      </button>
+      {showEnunciado && (
+        <div className="card anim-fadeIn" style={{ padding:'14px', whiteSpace:'pre-line', background:'rgba(255,251,240,.95)' }}>
+          <p style={{ color:'#4A2C0A', lineHeight:1.7, margin:0, fontSize:'.88rem' }}>{enunciado}</p>
+        </div>
+      )}
+      <div className="card" style={{ padding:'14px', textAlign:'center' }}>
+        <p style={{ color:'#7B1B1B', fontSize:'.72rem', letterSpacing:'2px', fontWeight:700, margin:'0 0 6px', textTransform:'uppercase' }}>
+          📊 Datos del problema
+        </p>
+        <p style={{ color:'#4A2C0A', fontSize:'.88rem', margin:0, lineHeight:1.5 }}>{fase.pregunta}</p>
+      </div>
+      <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
+        {fase.datos.map((d, i) => (
+          <div key={i} style={{
+            background:'linear-gradient(135deg,#FEFBF0,#F5E8BF)',
+            border:'2px solid #C4933A', borderRadius:'12px', padding:'12px 16px',
+            display:'flex', alignItems:'center', gap:'10px',
+          }}>
+            <span style={{ fontSize:'1.1rem', color:'#5CB85C' }}>✓</span>
+            <span style={{ color:'#4A2C0A', fontWeight:700, fontSize:'.92rem' }}>{d}</span>
+          </div>
+        ))}
+      </div>
+      <LechuzaDia11 hints={fase.hints} />
+      <button className="btn-main" onClick={onCorrect} style={{ padding:'14px' }}>
+        ✓ He entendido los datos →
+      </button>
+    </div>
+  );
+}
+
+// Sí / No — elección binaria con validación
+function StepSiNoDia12({ fase, enunciado, onCorrect }) {
+  const [chosen, setChosen] = React.useState(null);
+  const [showEnunciado, setShowEnunciado] = React.useState(false);
+
+  function pick(val) {
+    if (chosen) return;
+    setChosen(val);
+    if (val === fase.respuestaCorrecta) setTimeout(onCorrect, 900);
+  }
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+      <button className="btn-ghost" onClick={() => setShowEnunciado(v => !v)} style={{ width:'100%', fontSize:'.82rem' }}>
+        📖 {showEnunciado ? 'Ocultar el problema' : 'Volver a leer el problema'}
+      </button>
+      {showEnunciado && (
+        <div className="card anim-fadeIn" style={{ padding:'14px', whiteSpace:'pre-line', background:'rgba(255,251,240,.95)' }}>
+          <p style={{ color:'#4A2C0A', lineHeight:1.7, margin:0, fontSize:'.88rem' }}>{enunciado}</p>
+        </div>
+      )}
+      {fase.contexto && (
+        <div style={{ background:'rgba(196,147,58,.08)', border:'1px solid rgba(196,147,58,.3)', borderRadius:'12px', padding:'12px 14px' }}>
+          <p style={{ color:'#6B4A20', fontSize:'.88rem', margin:0, lineHeight:1.5, fontWeight:600 }}>💡 {fase.contexto}</p>
+        </div>
+      )}
+      <div className="card" style={{ padding:'16px', textAlign:'center' }}>
+        <p style={{ color:'#4A2C0A', fontSize:'1rem', margin:0, fontWeight:700, lineHeight:1.6 }}>{fase.pregunta}</p>
+      </div>
+      <div style={{ background:'rgba(255,255,255,.65)', border:'2px dashed rgba(196,147,58,.55)', borderRadius:'14px', padding:'12px', textAlign:'center' }}>
+        <p style={{ color:'#C4933A', fontSize:'.72rem', letterSpacing:'2px', margin:'0 0 4px', fontWeight:700 }}>✏️ PIÉNSALO EN PAPEL</p>
+        <p style={{ color:'#B0A08A', fontSize:'.82rem', margin:0, fontStyle:'italic' }}>Haz los cálculos necesarios antes de responder.</p>
+      </div>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px' }}>
+        {['si','no'].map(val => {
+          const isChosen = chosen === val;
+          const isCorrect = val === fase.respuestaCorrecta;
+          let bg = 'linear-gradient(135deg,#FEFBF0,#F5E8BF)';
+          let border = '#C4933A'; let color = '#4A2C0A';
+          if (chosen) {
+            if (isCorrect)             { bg='linear-gradient(135deg,#0A2A10,#143A1C)'; border='#5CB85C'; color='#A0F0B0'; }
+            else if (isChosen)         { bg='linear-gradient(135deg,#2A0A0A,#3A1010)'; border='#E05050'; color='#F0A0A0'; }
+            else                       { bg='rgba(255,255,255,.3)'; border='rgba(196,147,58,.2)'; color='#aaa'; }
+          }
+          return (
+            <button key={val} onClick={() => pick(val)} style={{
+              background:bg, border:`2px solid ${border}`, borderRadius:'16px',
+              padding:'22px 10px', color, fontWeight:900, fontSize:'1.4rem',
+              cursor: chosen ? 'default' : 'pointer', transition:'all .25s',
+            }}>{val === 'si' ? '✓ Sí' : '✗ No'}</button>
+          );
+        })}
+      </div>
+      {chosen === fase.respuestaCorrecta && (
+        <div className="fb-ok anim-scaleIn"><span>🌟</span><p style={{ margin:0 }}>¡Correcto!</p></div>
+      )}
+      {chosen && chosen !== fase.respuestaCorrecta && (
+        <>
+          <div className="fb-err anim-scaleIn"><span>💫</span><p style={{ margin:0 }}>Vamos a revisarlo con calma. Haz los cálculos en papel.</p></div>
+          <button className="btn-ghost" onClick={() => setChosen(null)} style={{ width:'100%' }}>🔄 Intentarlo otra vez</button>
+        </>
+      )}
+      <LechuzaDia11 hints={fase.hints} />
+    </div>
+  );
+}
+
+// Por qué — elección múltiple con explicación
+function StepPorqueDia12({ fase, enunciado, onCorrect }) {
+  const [chosen, setChosen] = React.useState(null);
+  const [showEnunciado, setShowEnunciado] = React.useState(false);
+
+  function pick(idx) {
+    if (chosen !== null) return;
+    setChosen(idx);
+    if (idx === fase.opcionCorrecta) setTimeout(onCorrect, 900);
+  }
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+      <button className="btn-ghost" onClick={() => setShowEnunciado(v => !v)} style={{ width:'100%', fontSize:'.82rem' }}>
+        📖 {showEnunciado ? 'Ocultar el problema' : 'Volver a leer el problema'}
+      </button>
+      {showEnunciado && (
+        <div className="card anim-fadeIn" style={{ padding:'14px', whiteSpace:'pre-line', background:'rgba(255,251,240,.95)' }}>
+          <p style={{ color:'#4A2C0A', lineHeight:1.7, margin:0, fontSize:'.88rem' }}>{enunciado}</p>
+        </div>
+      )}
+      <div className="card" style={{ padding:'16px', textAlign:'center' }}>
+        <p style={{ color:'#4A2C0A', fontSize:'1rem', margin:0, fontWeight:700, lineHeight:1.6 }}>{fase.pregunta}</p>
+      </div>
+      <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
+        {fase.opciones.map((op, i) => {
+          const isChosen = chosen === i;
+          const isCorrect = i === fase.opcionCorrecta;
+          let bg = 'linear-gradient(135deg,#FEFBF0,#F5E8BF)';
+          let border = '#C4933A'; let color = '#4A2C0A';
+          if (chosen !== null) {
+            if (isCorrect)           { bg='linear-gradient(135deg,#0A2A10,#143A1C)'; border='#5CB85C'; color='#A0F0B0'; }
+            else if (isChosen)       { bg='rgba(255,255,255,.3)'; border='rgba(196,147,58,.2)'; color='#aaa'; }
+            else                     { bg='rgba(255,255,255,.3)'; border='rgba(196,147,58,.2)'; color='#aaa'; }
+          }
+          return (
+            <button key={i} onClick={() => pick(i)} style={{
+              background:bg, border:`2px solid ${border}`, borderRadius:'14px',
+              padding:'14px 16px', color, fontWeight: isChosen || isCorrect ? 700 : 500,
+              fontSize:'.9rem', textAlign:'left', cursor: chosen !== null ? 'default' : 'pointer',
+              transition:'all .25s', display:'flex', alignItems:'flex-start', gap:'10px',
+            }}>
+              <span style={{ fontSize:'.95rem', flexShrink:0, marginTop:'1px' }}>
+                {chosen !== null && isCorrect ? '✓' : chosen !== null && isChosen ? '✗' : `${['A','B','C'][i]}.`}
+              </span>
+              {op}
+            </button>
+          );
+        })}
+      </div>
+      {chosen !== null && chosen === fase.opcionCorrecta && (
+        <div className="fb-ok anim-scaleIn"><span>🌟</span><p style={{ margin:0 }}>¡Correcto! Muy bien explicado.</p></div>
+      )}
+      {chosen !== null && chosen !== fase.opcionCorrecta && (
+        <>
+          <div className="fb-err anim-scaleIn"><span>💫</span><p style={{ margin:0 }}>Mira bien los números. ¿Cuánto tiene y cuánto cuestan?</p></div>
+          <button className="btn-ghost" onClick={() => setChosen(null)} style={{ width:'100%' }}>🔄 Intentarlo otra vez</button>
+        </>
+      )}
+      <LechuzaDia11 hints={fase.hints} />
+    </div>
+  );
+}
+
+// Orquestador de fases — Día 12
+function StepDia12({ problem, onIngrediente, onComplete }) {
+  const [faseIdx, setFaseIdx] = React.useState(0);
+  const [completados, setCompletados] = React.useState({});
+  const [showFinal, setShowFinal] = React.useState(false);
+
+  const fase = problem.fases[faseIdx];
+  const isLastFase = faseIdx === problem.fases.length - 1;
+
+  const guardados = problem.fases
+    .map((f, i) => (i in completados && f.guardado) ? f.guardado : null)
+    .filter(Boolean);
+
+  function handleFaseComplete() {
+    const valor = fase.guardado || '✓';
+    setCompletados(prev => ({...prev, [faseIdx]: valor}));
+    if (fase.ingredienteIdx !== undefined) onIngrediente(fase.ingredienteIdx);
+    if (isLastFase) setShowFinal(true);
+    else setFaseIdx(i => i + 1);
+  }
+
+  function goBack() { setFaseIdx(i => Math.max(0, i - 1)); }
+
+  const yaCompleto = faseIdx in completados;
+
+  const FaseHeader = () => (
+    <>
+      <div style={{ display:'flex', justifyContent:'center', gap:'6px', alignItems:'center', flexWrap:'wrap' }}>
+        {problem.fases.map((f, i) => (
+          <div key={i} style={{
+            width:'26px', height:'26px', borderRadius:'50%',
+            background: i in completados ? '#5CB85C' : i === faseIdx ? '#7B1B1B' : 'rgba(123,27,27,.12)',
+            color: (i in completados || i === faseIdx) ? '#fff' : '#9CA3AF',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            fontSize:'.62rem', fontWeight:800,
+          }}>{i in completados ? '✓' : i + 1}</div>
+        ))}
+      </div>
+      {faseIdx > 0 && !showFinal && (
+        <button className="btn-ghost" onClick={goBack} style={{ width:'100%', fontSize:'.82rem' }}>
+          ← Volver al paso anterior
+        </button>
+      )}
+      <ResultadosGuardados12 guardados={guardados} />
+    </>
+  );
+
+  if (showFinal) {
+    return (
+      <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+        <ResultadosGuardados12 guardados={guardados} />
+        <div className="fb-ok" style={{ flexDirection:'column', gap:'10px', padding:'20px 18px' }}>
+          <span style={{ fontSize:'1.8rem' }}>🏆</span>
+          <div style={{ textAlign:'center' }}>
+            <p style={{ margin:'0 0 6px', fontWeight:800, fontSize:'1rem' }}>¡Problema completado!</p>
+            <p style={{ margin:0, lineHeight:1.55, fontSize:'.95rem' }}>{problem.respuestaFinal}</p>
+          </div>
+        </div>
+        <button className="btn-main" onClick={onComplete} style={{ padding:'14px' }}>
+          → Continuar a la Mesa de Pociones
+        </button>
+      </div>
+    );
+  }
+
+  if (yaCompleto) {
+    return (
+      <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+        <FaseHeader />
+        <div className="card" style={{
+          padding:'16px', textAlign:'center',
+          background:'rgba(90,180,90,.06)', border:'2px solid rgba(90,180,90,.35)',
+        }}>
+          <p style={{ color:'#7B1B1B', fontSize:'.7rem', letterSpacing:'1.5px', fontWeight:700, margin:'0 0 8px', textTransform:'uppercase' }}>
+            ✓ Paso ya resuelto
+          </p>
+          <p style={{ color:'#4A2C0A', fontSize:'.9rem', margin:'0 0 6px', fontWeight:600 }}>{fase.pregunta}</p>
+          <p style={{ color:'#1A5A2A', fontSize:'1rem', fontWeight:800, margin:0 }}>{completados[faseIdx]}</p>
+        </div>
+        <button className="btn-main" onClick={() => setFaseIdx(i => i + 1)} style={{ padding:'14px' }}>
+          → Ir al paso {faseIdx + 2}
+        </button>
+      </div>
+    );
+  }
+
+  const renderFase = () => {
+    const props = { fase, enunciado: problem.enunciado, onCorrect: handleFaseComplete };
+    switch (fase.tipo) {
+      case 'calculo':         return <StepCalcDia12 {...props} />;
+      case 'confirmar-datos': return <StepConfirmarDatos12 {...props} />;
+      case 'sino':            return <StepSiNoDia12 {...props} />;
+      case 'comprobar':       return <StepSiNoDia12 {...props} />;
+      case 'porque':          return <StepPorqueDia12 {...props} />;
+      default:                return null;
+    }
+  };
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+      <FaseHeader />
+      {renderFase()}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
 //  DÍA 11 — STEP COMPONENTS
 // ═══════════════════════════════════════════════════════
 
@@ -6457,15 +7003,31 @@ function ProblemScreen({ mission, problemIndex, onComplete, onExit, onPotionComp
   const [done, setDone] = useState(false);
   const problem = mission.problems[problemIndex];
 
-  // Poción mágica (Día 8, 9, 10 y 11)
-  const isPocionMision = mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11';
+  // Poción mágica (Día 8, 9, 10, 11 y 12)
+  const isPocionMision = mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12';
   const isDia10 = mission.id === 'dia10';
   const isDia11 = mission.id === 'dia11';
+  const isDia12 = mission.id === 'dia12';
   const [ingredientes,   setIngredientes]   = useState(new Set());
   const [lastAdded,      setLastAdded]      = useState(null);
   const [splashVisible,  setSplashVisible]  = useState(false);
   const [splashFaseIdx,  setSplashFaseIdx]  = useState(null);
   const splashTimerRef = useRef(null);
+
+  // Día 12: award ingredient (splash only, no navigation); complete after all phases
+  function handleDia12Ingrediente(idx) {
+    if (ingredientes.has(idx)) return;
+    setIngredientes(prev => new Set([...prev, idx]));
+    setLastAdded(idx);
+    if (splashTimerRef.current) clearTimeout(splashTimerRef.current);
+    setSplashFaseIdx(idx);
+    setSplashVisible(true);
+    splashTimerRef.current = setTimeout(() => setSplashVisible(false), 2800);
+  }
+
+  function handleDia12Complete() {
+    if (!done) { setDone(true); onPotionComplete && onPotionComplete(problemIndex); onComplete(); }
+  }
 
   // Día 11: award ingredients one by one; last one triggers navigation
   function handleDia11Ingrediente(idx) {
@@ -6647,6 +7209,59 @@ function ProblemScreen({ mission, problemIndex, onComplete, onExit, onPotionComp
   }
   // ── End Día 11 fast-path ─────────────────────────────────
 
+  // ── Día 12 fast-path render ──────────────────────────────
+  if (isDia12) {
+    return (
+      <Wrap>
+        <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+          {/* Header */}
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+            <button className="btn-ghost" onClick={onExit} style={{ padding:'8px 12px', fontSize:'.8rem' }}>✕ Salir</button>
+            <div style={{ textAlign:'center' }}>
+              <p className="font-magic" style={{ color:'#C4933A', fontSize:'.65rem', letterSpacing:'2px', margin:0 }}>{mission.titulo}</p>
+              <p style={{ color:'#7B1B1B', fontSize:'.9rem', fontWeight:700, margin:'2px 0 0' }}>
+                {problem.icono} Problema {problemIndex + 1} de {mission.problems.length}
+              </p>
+            </div>
+            <div style={{ width:'80px' }} />
+          </div>
+
+          <div style={{ textAlign:'center' }}>
+            <h3 className="font-magic" style={{ color:'#7B1B1B', fontSize:'1.1rem', margin:0 }}>{problem.titulo}</h3>
+            <span style={{ fontSize:'.72rem', fontWeight:700, letterSpacing:'1.5px', color:'#10B981',
+              background:'rgba(16,185,129,.1)', border:'1px solid rgba(16,185,129,.35)',
+              borderRadius:'20px', padding:'3px 10px', display:'inline-block', marginTop:'4px' }}>
+              🪣 Compras mágicas
+            </span>
+          </div>
+
+          {/* Ingredient dots */}
+          <div style={{ display:'flex', justifyContent:'center', gap:'8px', alignItems:'center' }}>
+            {(problem.ingredientes || []).map((ing, i) => (
+              <div key={i} style={{
+                width:'38px', height:'38px', borderRadius:'50%',
+                background: ingredientes.has(i) ? `radial-gradient(circle,${ing.color}55,${ing.color}18)` : 'rgba(16,185,129,.08)',
+                border: `2px solid ${ingredientes.has(i) ? ing.color : 'rgba(16,185,129,.2)'}`,
+                display:'flex', alignItems:'center', justifyContent:'center',
+                fontSize: ingredientes.has(i) ? '1.2rem' : '.9rem',
+                filter: ingredientes.has(i) ? 'none' : 'grayscale(1)',
+                transition:'all .4s',
+              }}>{ingredientes.has(i) ? ing.emoji : '?'}</div>
+            ))}
+            <span style={{ color:'rgba(123,27,27,.6)', fontSize:'.78rem', marginLeft:'4px' }}>
+              {ingredientes.size}/4 ingredientes
+            </span>
+          </div>
+
+          <IngredientSplash visible={splashVisible} faseIdx={splashFaseIdx} problemIngredientes={problem.ingredientes} />
+
+          <StepDia12 problem={problem} onIngrediente={handleDia12Ingrediente} onComplete={handleDia12Complete} />
+        </div>
+      </Wrap>
+    );
+  }
+  // ── End Día 12 fast-path ─────────────────────────────────
+
   return (
     <Wrap>
       <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
@@ -6826,7 +7441,7 @@ function CelebrationScreen({ mission, problemIndex, onNext, isLast, potionComple
 // ═══════════════════════════════════════════════════════
 
 function MissionCompleteScreen({ mission, onRepeat, onHome, potionCompleted }) {
-  const isPocionMision = mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11';
+  const isPocionMision = mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12';
   const allPotionsDone = isPocionMision && potionCompleted && potionCompleted.size >= mission.problems.length;
 
   React.useEffect(() => {
@@ -7739,7 +8354,7 @@ function App() {
   function selectMission(m) { setMission(m); setProbIdx(0); setPotionCompleted(new Set()); setScreen('intro'); }
   function beginProblems()  { setProbIdx(0); setPotionCompleted(new Set()); setScreen('problem'); }
   function problemDone() {
-    if (mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11') {
+    if (mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12') {
       setScreen('mesa-pociones');
     } else {
       setScreen('celebration');
@@ -7778,7 +8393,7 @@ function App() {
       {screen === 'problem'      && <ProblemScreen       key={`${mission.id}-${probIdx}`} mission={mission} problemIndex={probIdx} onComplete={problemDone} onExit={() => setScreen('select')} onPotionComplete={onPotionComplete} />}
       {screen === 'celebration'  && <CelebrationScreen   mission={mission} problemIndex={probIdx} isLast={probIdx + 1 >= mission.problems.length} onNext={afterCelebration} potionCompleted={potionCompleted} />}
       {screen === 'mesa-pociones'&& <PotionWorkbenchScreen mission={mission} problemIndex={probIdx} onContinue={afterMesaPociones} />}
-      {screen === 'reward'       && (mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11')
+      {screen === 'reward'       && (mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12')
         ? <MissionCompleteScreen mission={mission} onRepeat={beginProblems} onHome={home} potionCompleted={potionCompleted} />
         : screen === 'reward' && <RewardScreen missionId={mission.id} onViewCollection={() => setScreen('collection')} onHome={home} />}
       {screen === 'collection'   && <CollectionScreen    onBack={() => setScreen('home')} onCastle={() => setScreen('castle')} />}
