@@ -6275,7 +6275,7 @@ function StepDia12({ problem, onIngrediente, onComplete }) {
   }
 
   const renderFase = () => {
-    const props = { fase, enunciado: problem.enunciado, onCorrect: handleFaseComplete };
+    const props = { key: faseIdx, fase, enunciado: problem.enunciado, onCorrect: handleFaseComplete };
     switch (fase.tipo) {
       case 'calculo':         return <StepCalcDia12 {...props} />;
       case 'confirmar-datos': return <StepConfirmarDatos12 {...props} />;
