@@ -2743,7 +2743,89 @@ const MISSION_DAY12 = {
   problems: PROBLEMS_DAY12,
 };
 
-const MISSIONS = [MISSION_DAY1, MISSION_DAY2, MISSION_DAY3, MISSION_DAY4, MISSION_DAY5, MISSION_DAY6, MISSION_DAY7, MISSION_DAY8, MISSION_DAY9, MISSION_DAY10, MISSION_DAY11, MISSION_DAY12];
+// ── DÍA 13 DATA ──────────────────────────────────────────
+const GRAFICA_DATA_D13 = {
+  cursos:      ['1º','2º','3º','4º','5º','6º'],
+  cursosLargo: ['Primero','Segundo','Tercero','Cuarto','Quinto','Sexto'],
+  brujas:  [10, 14,  9, 11, 14, 11],
+  magos:   [ 9, 11, 14, 12, 14,  9],
+  totales: [19, 25, 23, 23, 28, 20],
+};
+
+const PROBLEMS_DAY13 = [
+  {
+    id: 'p13-1', tipo: 'dia13', icono: '📊',
+    titulo: 'Aprendices de magia por curso',
+    showGrafica: true,
+    enunciado: 'En Hogwarts han contado los aprendices de magia de cada curso.\n\nLa gráfica muestra el número de brujas (barras doradas) y magos (barras azules) en cada curso.',
+    fases: [
+      { tipo:'eleccion4', pregunta:'¿En qué curso hay igual número de brujas que de magos?', opciones:['Segundo','Tercero','Cuarto','Quinto'], opcionCorrecta:3, ingredienteIdx:0, hints:['Busca un curso donde las dos barras lleguen al mismo número.','Compara la barra dorada y la azul de cada curso.','Solo hay un curso donde las dos cantidades son exactamente iguales.'] },
+      { tipo:'eleccion4', pregunta:'¿En qué curso hay menos brujas?', opciones:['Primero','Segundo','Tercero','Sexto'], opcionCorrecta:2, hints:['Busca la barra dorada más corta de toda la gráfica.','Compara todas las barras doradas.','¿Cuál es el número más pequeño en la fila de brujas?'] },
+      { tipo:'eleccion4', pregunta:'¿En qué cursos hay menos magos?', opciones:['Solo Primero','Solo Sexto','Primero y Sexto','Tercero y Cuarto'], opcionCorrecta:2, ingredienteIdx:1, hints:['Busca las barras azules más cortas.','¿Puede haber más de un curso con la misma cantidad?','Mira los números sobre las barras azules: 9, 11, 14, 12, 14, 9.'] },
+      { tipo:'eleccion4', pregunta:'¿Cuál de estas afirmaciones es verdad?', opciones:['En Primero hay menos brujas que magos.','En Cuarto hay igual número de brujas que de magos.','En Quinto hay más brujas que magos.','En Sexto hay dos brujas más que magos.'], opcionCorrecta:3, hints:['Lee cada frase y compruébala en la gráfica.','En Sexto hay 11 brujas y 9 magos.','¿Cuántas brujas más que magos hay en Sexto? 11 − 9 = ?'] },
+      { tipo:'tabla-grafica', pregunta:'Completa la tabla con los datos de la gráfica y calcula los totales.', ingredienteIdx:2, hints:['Copia primero los valores de brujas mirando la gráfica.','Luego copia los valores de magos.','El total de cada curso es brujas + magos.'] },
+      { tipo:'eleccion4', pregunta:'¿Cuál es el curso con más alumnado en total?', opciones:['Segundo','Tercero','Cuarto','Quinto'], opcionCorrecta:3, hints:['Mira la fila de totales de la tabla.','Busca el número más grande.','¿Cuál es el total más alto?'] },
+      { tipo:'eleccion4', pregunta:'¿Cuál es el curso con menos alumnado en total?', opciones:['Primero','Segundo','Tercero','Sexto'], opcionCorrecta:0, hints:['Mira la fila de totales de la tabla.','Busca el número más pequeño.','El total de Primero es 19.'] },
+      { tipo:'calculo', pregunta:'¿Cuántos alumnos más tiene Quinto que Segundo?', contexto:'Mira los totales de Quinto y Segundo en la tabla.', resultado:3, guardado:'3 alumnos más en Quinto que en Segundo', hints:['Mira el total de Quinto.','Mira el total de Segundo.','La diferencia es cuántos más tiene uno que el otro.'] },
+      { tipo:'ordenar-cursos', pregunta:'Ordena los cursos de menor a mayor según el número total de alumnado.\n\nToca los cursos en orden, empezando por el que menos alumnos tenga.', ingredienteIdx:3, hints:['Usa los totales de la tabla.','Empieza por el número más pequeño.','Si dos cursos tienen el mismo total, pueden ir en cualquier orden entre ellos.'] },
+    ],
+    respuestaFinal: 'El curso con más alumnado es Quinto (28) y el que menos alumnado tiene es Primero (19).',
+    ingredientes: [
+      { nombre:'Barra dorada',       emoji:'📊', color:'#F59E0B' },
+      { nombre:'Lupa de barras',     emoji:'🔍', color:'#3B82F6' },
+      { nombre:'Tabla encantada',    emoji:'📋', color:'#8B5CF6' },
+      { nombre:'Pergamino de orden', emoji:'📜', color:'#10B981' },
+    ],
+    miniPocionNombre: 'Poción de las Gráficas Claras',
+  },
+  {
+    id: 'p13-2', tipo: 'dia13', icono: '📚',
+    titulo: 'Libros para las aulas mágicas',
+    enunciado: 'En Hogwarts quieren comprar 25 libros de hechizos para cada una de las 12 aulas mágicas.\n\nEl colegio ya ha comprado 97 libros.\n\n¿Cuántos libros faltan por comprar?',
+    fases: [
+      { tipo:'calculo', pregunta:'¿Cuántos libros quieren comprar en total?', contexto:'25 libros para cada una de las 12 aulas mágicas.', resultado:300, guardado:'300 libros en total', ingredienteIdx:0, hints:['Hay 25 libros para cada aula.','En Hogwarts hay 12 aulas mágicas.','¿Cuántos libros serán en total?'] },
+      { tipo:'calculo', pregunta:'¿Cuántos libros faltan por comprar?', contexto:'Ya han comprado 97 libros de los 300 que quieren.', resultado:203, guardado:'203 libros faltan', ingredienteIdx:1, hints:['Ya sabes cuántos libros quieren en total.','También sabes cuántos ya compraron.','Los que faltan = total − ya comprados.'] },
+      { tipo:'completar-frases', pregunta:'Completa la respuesta final.', plantilla:'Se quieren comprar {A} libros en total.\nYa se han comprado {B} libros.\nFaltan por comprar {C} libros.', huecos:[{key:'A',respuesta:300,etiqueta:'total'},{key:'B',respuesta:97,etiqueta:'ya comprados'},{key:'C',respuesta:203,etiqueta:'faltan'}], ingredienteIdx:2, hints:['Usa los resultados que ya guardaste.','Primero va el total, luego los comprados, luego los que faltan.','No hace falta calcular nada, solo rellenar los huecos.'] },
+    ],
+    respuestaFinal: 'Faltan por comprar 203 libros de hechizos.',
+    ingredientes: [
+      { nombre:'Libro de aula',       emoji:'📖', color:'#F59E0B' },
+      { nombre:'Pergamino de compra', emoji:'📜', color:'#10B981' },
+      { nombre:'Sello de biblioteca', emoji:'🔖', color:'#8B5CF6' },
+    ],
+    miniPocionNombre: 'Poción de los Libros Pendientes',
+  },
+  {
+    id: 'p13-3', tipo: 'dia13', icono: '⭐',
+    titulo: 'Pegatinas de criaturas mágicas',
+    enunciado: 'Luna tiene 127 pegatinas de criaturas mágicas.\n\nNeville tiene 278 pegatinas.\n\nQuieren pegarlas en un álbum donde cada página lleva 9 pegatinas.\n\n¿Cuántas páginas completarán entre los dos?',
+    fases: [
+      { tipo:'calculo', pregunta:'¿Cuántas pegatinas tienen entre los dos?', contexto:'Luna tiene 127 pegatinas y Neville tiene 278.', resultado:405, guardado:'405 pegatinas en total', ingredienteIdx:0, hints:['Junta las pegatinas de Luna y las de Neville.','La pregunta dice "entre los dos".','¿Cuántas tiene cada uno?'] },
+      { tipo:'calculo', pregunta:'¿Cuántas páginas del álbum completarán?', contexto:'Tienen 405 pegatinas en total. Cada página lleva 9 pegatinas.', resultado:45, guardado:'45 páginas completas', ingredienteIdx:1, hints:['Ya sabes cuántas pegatinas tienen en total.','Cada página lleva 9 pegatinas.','¿Cuántos grupos de 9 caben en 405?'] },
+      { tipo:'completar-frases', pregunta:'Completa la respuesta final.', plantilla:'Entre los dos tienen {A} pegatinas.\nCon 9 pegatinas por página, completarán {B} páginas del álbum.', huecos:[{key:'A',respuesta:405,etiqueta:'pegatinas totales'},{key:'B',respuesta:45,etiqueta:'páginas'}], ingredienteIdx:2, hints:['Usa los resultados que ya guardaste.','Primero van las pegatinas totales.','Luego van las páginas que completarán.'] },
+    ],
+    respuestaFinal: 'Completarán 45 páginas del álbum mágico de criaturas.',
+    ingredientes: [
+      { nombre:'Pegatina de Luna',  emoji:'⭐', color:'#F59E0B' },
+      { nombre:'Página de álbum',   emoji:'📄', color:'#3B82F6' },
+      { nombre:'Cromo de criatura', emoji:'🦄', color:'#8B5CF6' },
+    ],
+    miniPocionNombre: 'Poción del Álbum de Criaturas',
+  },
+];
+
+const MISSION_DAY13 = {
+  id: 'dia13', numero: 'Día 13',
+  titulo: 'Gráficas, tablas y problemas de Hogwarts',
+  objetivo: 'Leer una gráfica de barras, completar una tabla y resolver problemas de varios pasos.',
+  descripcion: 'Interpreta datos en una gráfica, completa tablas y resuelve problemas usando la información.',
+  hechizo: 'Miro los datos antes de calcular',
+  mensajeFinal: '¡Has aprendido a leer gráficas, completar tablas y resolver problemas con datos!',
+  insignia: '🔍', cardId: 'lupa-graficas',
+  problems: PROBLEMS_DAY13,
+};
+
+const MISSIONS = [MISSION_DAY1, MISSION_DAY2, MISSION_DAY3, MISSION_DAY4, MISSION_DAY5, MISSION_DAY6, MISSION_DAY7, MISSION_DAY8, MISSION_DAY9, MISSION_DAY10, MISSION_DAY11, MISSION_DAY12, MISSION_DAY13];
 
 // ── CROMOS MÁGICOS ──────────────────────────────────────────
 const MAGIC_CARDS = [
@@ -2912,6 +2994,17 @@ const MAGIC_CARDS = [
     bgFrom: '#0A2A1A', bgTo: '#103A22',
     accentColor: '#4ADE80',
   },
+  {
+    id: 'lupa-graficas',
+    name: 'Lupa de Tablas y Gráficas',
+    rarity: 'Raro',
+    rarityKey: 'raro',
+    description: 'Te ayuda a leer datos en gráficas y tablas para encontrar respuestas escondidas.',
+    icon: '🔍',
+    missionId: 'dia13',
+    bgFrom: '#1A1A3A', bgTo: '#2A2A5A',
+    accentColor: '#F5D020',
+  },
 ];
 
 // ── localStorage helpers ─────────────────────────────────────
@@ -3028,6 +3121,15 @@ const CASTLE_PIECES = [
     description: 'Aquí compruebas que tu respuesta tiene sentido antes de entregarla.',
     accentColor: '#4ADE80',
     bgColor: '#0A2A1A',
+  },
+  {
+    id: 'sala-datos',
+    cardId: 'lupa-graficas',
+    name: 'Sala de los Datos',
+    icon: '🔍',
+    description: 'Aquí aprendes a leer gráficas y tablas para resolver problemas con información.',
+    accentColor: '#F5D020',
+    bgColor: '#2A2A0A',
   },
 ];
 
@@ -5981,6 +6083,434 @@ function StepCalculoEncadenado({ problem, onNext, onSave, onFaseComplete }) {
 }
 
 // ═══════════════════════════════════════════════════════
+//  DÍA 13 — STEP COMPONENTS
+// ═══════════════════════════════════════════════════════
+
+function GraficaCursosHogwarts() {
+  const { cursos, brujas, magos } = GRAFICA_DATA_D13;
+  const OX = 32, OY = 160, GW = 248, GH = 140;
+  const scale = GH / 16;
+  const groupW = GW / 6;
+  return (
+    <div style={{ background:'rgba(255,251,240,.97)', border:'1.5px solid rgba(196,147,58,.4)', borderRadius:'12px', padding:'10px 6px 4px', overflow:'hidden' }}>
+      <p style={{ textAlign:'center', color:'#7B1B1B', fontSize:'.68rem', letterSpacing:'2px', fontWeight:700, margin:'0 0 2px', textTransform:'uppercase' }}>📊 Gráfica de aprendices de Hogwarts</p>
+      <svg viewBox="0 0 290 200" style={{ width:'100%', display:'block' }}>
+        {[0,4,8,12,16].map(v => {
+          const y = OY - v * scale;
+          return (
+            <g key={v}>
+              <line x1={OX} y1={y} x2={280} y2={y} stroke="rgba(196,147,58,.22)" strokeWidth="0.8"/>
+              <text x={OX-3} y={y+3} textAnchor="end" fontSize="7" fill="#6B4A20">{v}</text>
+            </g>
+          );
+        })}
+        <line x1={OX} y1={20} x2={OX} y2={OY} stroke="#C4933A" strokeWidth="1"/>
+        <line x1={OX} y1={OY} x2={280} y2={OY} stroke="#C4933A" strokeWidth="1"/>
+        {cursos.map((c, i) => {
+          const gx = OX + i * groupW;
+          const bx1 = gx + 2; const bx2 = gx + 20;
+          const bh1 = brujas[i] * scale; const bh2 = magos[i] * scale;
+          return (
+            <g key={i}>
+              <rect x={bx1} y={OY-bh1} width={16} height={bh1} rx={2} fill="#F5A823" opacity="0.9"/>
+              <text x={bx1+8} y={OY-bh1-2} textAnchor="middle" fontSize="6.5" fill="#7B4A0A" fontWeight="bold">{brujas[i]}</text>
+              <rect x={bx2} y={OY-bh2} width={16} height={bh2} rx={2} fill="#5B9BD5" opacity="0.9"/>
+              <text x={bx2+8} y={OY-bh2-2} textAnchor="middle" fontSize="6.5" fill="#1A3A6A" fontWeight="bold">{magos[i]}</text>
+              <text x={gx+groupW/2} y={OY+11} textAnchor="middle" fontSize="7.5" fill="#4A2C0A" fontWeight="bold">{c}</text>
+            </g>
+          );
+        })}
+        <rect x="60" y="183" width="10" height="7" rx="1" fill="#F5A823"/>
+        <text x="73" y="190" fontSize="7.5" fill="#4A2C0A" fontWeight="500">Brujas</text>
+        <rect x="130" y="183" width="10" height="7" rx="1" fill="#5B9BD5"/>
+        <text x="143" y="190" fontSize="7.5" fill="#4A2C0A" fontWeight="500">Magos</text>
+      </svg>
+    </div>
+  );
+}
+
+function StepEleccion4Dia13({ fase, enunciado, onCorrect }) {
+  const [chosen, setChosen] = React.useState(null);
+  const [showEnunciado, setShowEnunciado] = React.useState(false);
+  function pick(idx) {
+    if (chosen !== null) return;
+    setChosen(idx);
+    if (idx === fase.opcionCorrecta) setTimeout(onCorrect, 900);
+  }
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+      {enunciado && (
+        <>
+          <button className="btn-ghost" onClick={() => setShowEnunciado(v => !v)} style={{ width:'100%', fontSize:'.82rem' }}>
+            📖 {showEnunciado ? 'Ocultar el enunciado' : 'Ver el enunciado'}
+          </button>
+          {showEnunciado && (
+            <div className="card anim-fadeIn" style={{ padding:'14px', whiteSpace:'pre-line', background:'rgba(255,251,240,.95)' }}>
+              <p style={{ color:'#4A2C0A', lineHeight:1.7, margin:0, fontSize:'.88rem' }}>{enunciado}</p>
+            </div>
+          )}
+        </>
+      )}
+      <div className="card" style={{ padding:'16px', textAlign:'center' }}>
+        <p style={{ color:'#4A2C0A', fontSize:'1rem', margin:0, fontWeight:700, lineHeight:1.6 }}>{fase.pregunta}</p>
+      </div>
+      <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
+        {fase.opciones.map((op, i) => {
+          const isChosen = chosen === i;
+          const isCorrect = i === fase.opcionCorrecta;
+          let bg = 'linear-gradient(135deg,#FEFBF0,#F5E8BF)';
+          let border = '#C4933A'; let color = '#4A2C0A';
+          if (chosen !== null) {
+            if (isCorrect)     { bg='linear-gradient(135deg,#0A2A10,#143A1C)'; border='#5CB85C'; color='#A0F0B0'; }
+            else if (isChosen) { bg='rgba(255,255,255,.3)'; border='rgba(196,147,58,.25)'; color='#aaa'; }
+            else               { bg='rgba(255,255,255,.3)'; border='rgba(196,147,58,.2)';  color='#aaa'; }
+          }
+          return (
+            <button key={i} onClick={() => pick(i)} style={{
+              background:bg, border:`2px solid ${border}`, borderRadius:'14px',
+              padding:'14px 16px', color, fontWeight: (isChosen || isCorrect) ? 700 : 500,
+              fontSize:'.9rem', textAlign:'left', cursor: chosen !== null ? 'default' : 'pointer',
+              transition:'all .25s', display:'flex', alignItems:'flex-start', gap:'10px',
+            }}>
+              <span style={{ fontSize:'.85rem', flexShrink:0 }}>
+                {chosen !== null && isCorrect ? '✓' : chosen !== null && isChosen ? '✗' : `${['A','B','C','D'][i]}.`}
+              </span>
+              {op}
+            </button>
+          );
+        })}
+      </div>
+      {chosen !== null && chosen === fase.opcionCorrecta && (
+        <div className="fb-ok anim-scaleIn"><span>🌟</span><p style={{ margin:0 }}>¡Correcto!</p></div>
+      )}
+      {chosen !== null && chosen !== fase.opcionCorrecta && (
+        <>
+          <div className="fb-err anim-scaleIn"><span>💫</span><p style={{ margin:0 }}>Mira otra vez la gráfica. Compara los números con calma.</p></div>
+          <button className="btn-ghost" onClick={() => setChosen(null)} style={{ width:'100%' }}>🔄 Intentarlo otra vez</button>
+        </>
+      )}
+      <LechuzaDia11 hints={fase.hints} />
+    </div>
+  );
+}
+
+function StepTablaDia13({ fase, onCorrect }) {
+  const { cursos, brujas: BRUJAS_OK, magos: MAGOS_OK, totales: TOTALES_OK } = GRAFICA_DATA_D13;
+  const [vals, setVals] = React.useState({});
+  const [status, setStatus] = React.useState('idle');
+  function setV(key, v) { setVals(prev => ({...prev, [key]: v})); setStatus('idle'); }
+  function check() {
+    const ok = [0,1,2,3,4,5].every(i =>
+      parseInt(vals[`b${i}`]) === BRUJAS_OK[i] &&
+      parseInt(vals[`m${i}`]) === MAGOS_OK[i] &&
+      parseInt(vals[`t${i}`]) === TOTALES_OK[i]
+    );
+    if (ok) { setStatus('correct'); setTimeout(onCorrect, 900); }
+    else setStatus('wrong');
+  }
+  function cellBg(key, expected) {
+    if (status !== 'wrong') return 'rgba(255,251,240,.9)';
+    const v = parseInt(vals[key]);
+    return !vals[key] ? 'rgba(255,220,100,.2)' : v === expected ? 'rgba(92,184,92,.2)' : 'rgba(220,80,80,.15)';
+  }
+  function inp(key, exp) {
+    return (
+      <input type="number" value={vals[key] || ''} onChange={e => setV(key, e.target.value)}
+        style={{ width:'34px', textAlign:'center', padding:'3px 1px', border:'1.5px solid rgba(196,147,58,.5)',
+          borderRadius:'6px', background:cellBg(key,exp), color:'#4A2C0A', fontWeight:700, fontSize:'.78rem', outline:'none' }}
+        placeholder="-" />
+    );
+  }
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+      <div className="card" style={{ padding:'12px', textAlign:'center' }}>
+        <p style={{ color:'#4A2C0A', fontWeight:700, margin:0, lineHeight:1.5 }}>{fase.pregunta}</p>
+      </div>
+      <div style={{ overflowX:'auto', WebkitOverflowScrolling:'touch' }}>
+        <table style={{ borderCollapse:'collapse', minWidth:'310px', fontSize:'.78rem', textAlign:'center', width:'100%' }}>
+          <thead>
+            <tr>
+              <th style={{ padding:'6px 6px 6px 2px', color:'#7B1B1B', textAlign:'left', fontWeight:700, fontSize:'.7rem', borderBottom:'2px solid rgba(196,147,58,.5)' }}></th>
+              {cursos.map(c => (
+                <th key={c} style={{ padding:'6px 3px', color:'#7B1B1B', fontWeight:800, borderBottom:'2px solid rgba(196,147,58,.5)' }}>{c}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr style={{ background:'rgba(245,168,35,.07)' }}>
+              <td style={{ padding:'5px 6px 5px 2px', color:'#7B4A0A', fontWeight:700, textAlign:'left', whiteSpace:'nowrap' }}>🟡 Brujas</td>
+              {[0,1,2,3,4,5].map(i => <td key={i} style={{ padding:'3px 2px' }}>{inp(`b${i}`, BRUJAS_OK[i])}</td>)}
+            </tr>
+            <tr style={{ background:'rgba(91,155,213,.07)' }}>
+              <td style={{ padding:'5px 6px 5px 2px', color:'#1A3A6A', fontWeight:700, textAlign:'left', whiteSpace:'nowrap' }}>🔵 Magos</td>
+              {[0,1,2,3,4,5].map(i => <td key={i} style={{ padding:'3px 2px' }}>{inp(`m${i}`, MAGOS_OK[i])}</td>)}
+            </tr>
+            <tr style={{ background:'rgba(92,184,92,.07)', borderTop:'2px solid rgba(196,147,58,.35)' }}>
+              <td style={{ padding:'5px 6px 5px 2px', color:'#1A5A2A', fontWeight:700, textAlign:'left', whiteSpace:'nowrap' }}>📊 Total</td>
+              {[0,1,2,3,4,5].map(i => <td key={i} style={{ padding:'3px 2px' }}>{inp(`t${i}`, TOTALES_OK[i])}</td>)}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      {status === 'correct' && <div className="fb-ok anim-scaleIn"><span>🌟</span><p style={{ margin:0 }}>¡Tabla completada perfectamente!</p></div>}
+      {status === 'wrong' && (
+        <>
+          <div className="fb-err anim-scaleIn"><span>💫</span><p style={{ margin:0 }}>Algún dato no encaja. Las celdas en rojo tienen un error — mira de nuevo la gráfica.</p></div>
+          <button className="btn-ghost" onClick={() => setStatus('idle')} style={{ width:'100%' }}>🔄 Corregir errores</button>
+        </>
+      )}
+      <LechuzaDia11 hints={fase.hints} />
+      {status !== 'correct' && (
+        <button className="btn-main" onClick={check} style={{ padding:'14px' }}>✓ Comprobar tabla</button>
+      )}
+    </div>
+  );
+}
+
+function StepOrdenarCursosDia13({ fase, onCorrect }) {
+  const { cursosLargo, totales } = GRAFICA_DATA_D13;
+  // Correct order by total: Primero(19)=0, Sexto(20)=5, Tercero(23)=2, Cuarto(23)=3, Segundo(25)=1, Quinto(28)=4
+  const [orden, setOrden] = React.useState([]);
+  const [status, setStatus] = React.useState('idle');
+  const disponibles = [0,1,2,3,4,5].filter(i => !orden.includes(i));
+  function tap(i) { if (orden.length < 6) setOrden(prev => [...prev, i]); }
+  function undo() { setOrden(prev => prev.slice(0, -1)); setStatus('idle'); }
+  function check() {
+    const o = orden;
+    const ok =
+      o[0] === 0 &&
+      o[1] === 5 &&
+      ((o[2] === 2 && o[3] === 3) || (o[2] === 3 && o[3] === 2)) &&
+      o[4] === 1 &&
+      o[5] === 4;
+    if (ok) { setStatus('correct'); setTimeout(onCorrect, 900); }
+    else { setStatus('wrong'); }
+  }
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'12px' }}>
+      <div className="card" style={{ padding:'14px', textAlign:'center' }}>
+        <p style={{ color:'#4A2C0A', fontWeight:700, margin:0, whiteSpace:'pre-line', lineHeight:1.6 }}>{fase.pregunta}</p>
+      </div>
+      {/* Order slots */}
+      <div style={{ display:'flex', flexDirection:'column', gap:'5px' }}>
+        {Array.from({length:6}, (_, pos) => (
+          <div key={pos} style={{ display:'flex', alignItems:'center', gap:'10px', padding:'8px 12px',
+            background: orden[pos] !== undefined ? 'rgba(92,184,92,.1)' : 'rgba(255,255,255,.55)',
+            border:`1.5px solid ${orden[pos] !== undefined ? 'rgba(92,184,92,.4)' : 'rgba(196,147,58,.3)'}`,
+            borderRadius:'10px' }}>
+            <span style={{ color:'#C4933A', fontWeight:800, fontSize:'.85rem', minWidth:'18px' }}>{pos+1}.</span>
+            <span style={{ color: orden[pos] !== undefined ? '#1A5A2A' : '#B0A08A',
+              fontWeight: orden[pos] !== undefined ? 700 : 400,
+              fontStyle: orden[pos] === undefined ? 'italic' : 'normal', fontSize:'.88rem' }}>
+              {orden[pos] !== undefined ? `${cursosLargo[orden[pos]]} — ${totales[orden[pos]]} alumnos` : '___'}
+            </span>
+          </div>
+        ))}
+      </div>
+      {/* Available buttons */}
+      {disponibles.length > 0 && (
+        <div style={{ display:'flex', flexWrap:'wrap', gap:'8px', justifyContent:'center' }}>
+          {disponibles.map(i => (
+            <button key={i} onClick={() => tap(i)} style={{
+              background:'linear-gradient(135deg,#FEFBF0,#F5E8BF)', border:'2px solid #C4933A',
+              borderRadius:'20px', padding:'8px 14px', color:'#4A2C0A', fontWeight:700, fontSize:'.85rem', cursor:'pointer',
+            }}>{cursosLargo[i]}</button>
+          ))}
+        </div>
+      )}
+      <div style={{ display:'flex', gap:'8px' }}>
+        {orden.length > 0 && status !== 'correct' && (
+          <button className="btn-ghost" onClick={undo} style={{ flex:1, fontSize:'.82rem' }}>← Deshacer</button>
+        )}
+        {orden.length === 6 && status === 'idle' && (
+          <button className="btn-main" onClick={check} style={{ flex:2, padding:'12px' }}>✓ Comprobar orden</button>
+        )}
+      </div>
+      {status === 'correct' && <div className="fb-ok anim-scaleIn"><span>🌟</span><p style={{ margin:0 }}>¡Orden correcto! ¡Lo has conseguido!</p></div>}
+      {status === 'wrong' && (
+        <>
+          <div className="fb-err anim-scaleIn"><span>💫</span><p style={{ margin:0 }}>El orden no es correcto. Revisa los totales de la tabla.</p></div>
+          <button className="btn-ghost" onClick={() => { setOrden([]); setStatus('idle'); }} style={{ width:'100%' }}>🔄 Volver a intentarlo</button>
+        </>
+      )}
+      <LechuzaDia11 hints={fase.hints} />
+    </div>
+  );
+}
+
+function StepCompletarFrasesDia13({ fase, enunciado, onCorrect }) {
+  const [vals, setVals] = React.useState({});
+  const [status, setStatus] = React.useState('idle');
+  const [showEnunciado, setShowEnunciado] = React.useState(false);
+  function setV(key, v) { setVals(prev => ({...prev, [key]: v})); setStatus('idle'); }
+  function check() {
+    const ok = fase.huecos.every(h => parseInt(vals[h.key]) === h.respuesta);
+    if (ok) { setStatus('correct'); setTimeout(onCorrect, 900); }
+    else setStatus('wrong');
+  }
+  // Parse plantilla into lines, each line into text+input segments
+  const lines = fase.plantilla.split('\n').map(line => {
+    const segs = []; let last = 0;
+    const re = /\{([A-Z])\}/g; let m;
+    while ((m = re.exec(line)) !== null) {
+      if (m.index > last) segs.push({ type:'text', content: line.slice(last, m.index) });
+      segs.push({ type:'input', key: m[1] });
+      last = m.index + m[0].length;
+    }
+    if (last < line.length) segs.push({ type:'text', content: line.slice(last) });
+    return segs;
+  });
+  const allFilled = fase.huecos.every(h => vals[h.key]);
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+      <button className="btn-ghost" onClick={() => setShowEnunciado(v => !v)} style={{ width:'100%', fontSize:'.82rem' }}>
+        📖 {showEnunciado ? 'Ocultar el enunciado' : 'Ver el enunciado'}
+      </button>
+      {showEnunciado && (
+        <div className="card anim-fadeIn" style={{ padding:'14px', whiteSpace:'pre-line', background:'rgba(255,251,240,.95)' }}>
+          <p style={{ color:'#4A2C0A', lineHeight:1.7, margin:0, fontSize:'.88rem' }}>{enunciado}</p>
+        </div>
+      )}
+      <div className="card" style={{ padding:'14px', textAlign:'center' }}>
+        <p style={{ color:'#4A2C0A', fontSize:'.95rem', margin:0, fontWeight:700 }}>{fase.pregunta}</p>
+      </div>
+      <div style={{ background:'rgba(255,251,240,.92)', border:'1.5px solid rgba(196,147,58,.35)', borderRadius:'12px', padding:'16px' }}>
+        {lines.map((line, li) => (
+          <div key={li} style={{ display:'flex', alignItems:'center', flexWrap:'wrap', gap:'4px', marginBottom: li < lines.length-1 ? '10px' : 0 }}>
+            {line.map((seg, si) => seg.type === 'text'
+              ? <span key={si} style={{ color:'#4A2C0A', fontSize:'.9rem', lineHeight:1.7 }}>{seg.content}</span>
+              : <input key={si} type="number" value={vals[seg.key] || ''}
+                  onChange={e => setV(seg.key, e.target.value)}
+                  style={{ width:'66px', textAlign:'center', padding:'4px 6px', borderRadius:'8px',
+                    border:`2px solid ${status==='wrong' && vals[seg.key] && parseInt(vals[seg.key])!==fase.huecos.find(h=>h.key===seg.key).respuesta ? '#E05050' : '#C4933A'}`,
+                    background:'rgba(255,251,240,.9)', color:'#4A2C0A', fontWeight:700, fontSize:'.95rem', outline:'none' }}
+                  placeholder="___" />
+            )}
+          </div>
+        ))}
+      </div>
+      {status === 'correct' && <div className="fb-ok anim-scaleIn"><span>🌟</span><p style={{ margin:0 }}>¡Correcto! Has completado la respuesta.</p></div>}
+      {status === 'wrong' && (
+        <>
+          <div className="fb-err anim-scaleIn"><span>💫</span><p style={{ margin:0 }}>Algún número no encaja. Revisa tus resultados guardados.</p></div>
+          <button className="btn-ghost" onClick={() => { setVals({}); setStatus('idle'); }} style={{ width:'100%' }}>🔄 Intentarlo otra vez</button>
+        </>
+      )}
+      <LechuzaDia11 hints={fase.hints} />
+      {status !== 'correct' && (
+        <button className="btn-main" onClick={check} disabled={!allFilled} style={{ padding:'14px', opacity: allFilled ? 1 : 0.55 }}>✓ Comprobar</button>
+      )}
+    </div>
+  );
+}
+
+function StepDia13({ problem, onIngrediente, onComplete }) {
+  const [faseIdx, setFaseIdx] = React.useState(0);
+  const [completados, setCompletados] = React.useState({});
+  const [showFinal, setShowFinal] = React.useState(false);
+  const [graficaVisible, setGraficaVisible] = React.useState(true);
+
+  const fase = problem.fases[faseIdx];
+  const isLastFase = faseIdx === problem.fases.length - 1;
+
+  const guardados = problem.fases
+    .map((f, i) => (i in completados && f.guardado) ? f.guardado : null)
+    .filter(Boolean);
+
+  function handleFaseComplete() {
+    setCompletados(prev => ({...prev, [faseIdx]: fase.guardado || '✓'}));
+    if (fase.ingredienteIdx !== undefined) onIngrediente(fase.ingredienteIdx);
+    if (isLastFase) setShowFinal(true);
+    else setFaseIdx(i => i + 1);
+  }
+
+  function goBack() { setFaseIdx(i => Math.max(0, i - 1)); }
+  const yaCompleto = faseIdx in completados;
+
+  const FaseHeader = () => (
+    <>
+      <div style={{ display:'flex', justifyContent:'center', gap:'4px', alignItems:'center', flexWrap:'wrap' }}>
+        {problem.fases.map((f, i) => (
+          <div key={i} style={{
+            width:'22px', height:'22px', borderRadius:'50%',
+            background: i in completados ? '#5CB85C' : i === faseIdx ? '#7B1B1B' : 'rgba(123,27,27,.12)',
+            color: (i in completados || i === faseIdx) ? '#fff' : '#9CA3AF',
+            display:'flex', alignItems:'center', justifyContent:'center', fontSize:'.58rem', fontWeight:800,
+          }}>{i in completados ? '✓' : i + 1}</div>
+        ))}
+      </div>
+      {faseIdx > 0 && !showFinal && (
+        <button className="btn-ghost" onClick={goBack} style={{ width:'100%', fontSize:'.82rem' }}>← Volver al paso anterior</button>
+      )}
+      {problem.showGrafica && (
+        <div>
+          <button onClick={() => setGraficaVisible(v => !v)} style={{
+            width:'100%', background:'none', border:'1px solid rgba(196,147,58,.4)',
+            borderRadius:'8px', padding:'6px 12px', cursor:'pointer', marginBottom:'4px',
+            display:'flex', justifyContent:'space-between', alignItems:'center',
+          }}>
+            <span style={{ color:'#7B1B1B', fontSize:'.75rem', fontWeight:700 }}>📊 Ver la gráfica</span>
+            <span style={{ color:'#C4933A', fontSize:'.78rem' }}>{graficaVisible ? '▲' : '▼'}</span>
+          </button>
+          {graficaVisible && <GraficaCursosHogwarts />}
+        </div>
+      )}
+      <ResultadosGuardados12 guardados={guardados} />
+    </>
+  );
+
+  if (showFinal) {
+    return (
+      <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+        {problem.showGrafica && graficaVisible && <GraficaCursosHogwarts />}
+        <ResultadosGuardados12 guardados={guardados} />
+        <div className="fb-ok" style={{ flexDirection:'column', gap:'10px', padding:'20px 18px' }}>
+          <span style={{ fontSize:'1.8rem' }}>🏆</span>
+          <div style={{ textAlign:'center' }}>
+            <p style={{ margin:'0 0 6px', fontWeight:800, fontSize:'1rem' }}>¡Problema completado!</p>
+            <p style={{ margin:0, lineHeight:1.55, fontSize:'.95rem' }}>{problem.respuestaFinal}</p>
+          </div>
+        </div>
+        <button className="btn-main" onClick={onComplete} style={{ padding:'14px' }}>→ Continuar a la Mesa de Pociones</button>
+      </div>
+    );
+  }
+
+  if (yaCompleto) {
+    return (
+      <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+        <FaseHeader />
+        <div className="card" style={{ padding:'16px', textAlign:'center', background:'rgba(90,180,90,.06)', border:'2px solid rgba(90,180,90,.35)' }}>
+          <p style={{ color:'#7B1B1B', fontSize:'.7rem', letterSpacing:'1.5px', fontWeight:700, margin:'0 0 8px', textTransform:'uppercase' }}>✓ Paso ya resuelto</p>
+          <p style={{ color:'#4A2C0A', fontSize:'.9rem', margin:'0 0 6px', fontWeight:600 }}>{fase.pregunta ? fase.pregunta.split('\n')[0] : '—'}</p>
+          <p style={{ color:'#1A5A2A', fontSize:'1rem', fontWeight:800, margin:0 }}>{completados[faseIdx]}</p>
+        </div>
+        <button className="btn-main" onClick={() => setFaseIdx(i => i + 1)} style={{ padding:'14px' }}>→ Ir al paso {faseIdx + 2}</button>
+      </div>
+    );
+  }
+
+  const renderFase = () => {
+    const props = { key: faseIdx, fase, enunciado: problem.enunciado, onCorrect: handleFaseComplete };
+    switch (fase.tipo) {
+      case 'calculo':          return <StepCalcDia12 {...props} />;
+      case 'eleccion4':        return <StepEleccion4Dia13 {...props} />;
+      case 'tabla-grafica':    return <StepTablaDia13 {...props} />;
+      case 'ordenar-cursos':   return <StepOrdenarCursosDia13 {...props} />;
+      case 'completar-frases': return <StepCompletarFrasesDia13 {...props} />;
+      default: return null;
+    }
+  };
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+      <FaseHeader />
+      {renderFase()}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
 //  DÍA 12 — STEP COMPONENTS
 // ═══════════════════════════════════════════════════════
 
@@ -7067,11 +7597,12 @@ function ProblemScreen({ mission, problemIndex, onComplete, onExit, onPotionComp
   const [done, setDone] = useState(false);
   const problem = mission.problems[problemIndex];
 
-  // Poción mágica (Día 8, 9, 10, 11 y 12)
-  const isPocionMision = mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12';
+  // Poción mágica (Día 8, 9, 10, 11, 12 y 13)
+  const isPocionMision = mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12' || mission.id === 'dia13';
   const isDia10 = mission.id === 'dia10';
   const isDia11 = mission.id === 'dia11';
   const isDia12 = mission.id === 'dia12';
+  const isDia13 = mission.id === 'dia13';
   const [ingredientes,   setIngredientes]   = useState(new Set());
   const [lastAdded,      setLastAdded]      = useState(null);
   const [splashVisible,  setSplashVisible]  = useState(false);
@@ -7090,6 +7621,21 @@ function ProblemScreen({ mission, problemIndex, onComplete, onExit, onPotionComp
   }
 
   function handleDia12Complete() {
+    if (!done) { setDone(true); onPotionComplete && onPotionComplete(problemIndex); onComplete(); }
+  }
+
+  // Día 13: award ingredient (splash only, no navigation); complete after all phases
+  function handleDia13Ingrediente(idx) {
+    if (ingredientes.has(idx)) return;
+    setIngredientes(prev => new Set([...prev, idx]));
+    setLastAdded(idx);
+    if (splashTimerRef.current) clearTimeout(splashTimerRef.current);
+    setSplashFaseIdx(idx);
+    setSplashVisible(true);
+    splashTimerRef.current = setTimeout(() => setSplashVisible(false), 2800);
+  }
+
+  function handleDia13Complete() {
     if (!done) { setDone(true); onPotionComplete && onPotionComplete(problemIndex); onComplete(); }
   }
 
@@ -7326,6 +7872,59 @@ function ProblemScreen({ mission, problemIndex, onComplete, onExit, onPotionComp
   }
   // ── End Día 12 fast-path ─────────────────────────────────
 
+  // ── Día 13 fast-path render ──────────────────────────────
+  if (isDia13) {
+    const totalIngs = (problem.ingredientes || []).length;
+    return (
+      <Wrap>
+        <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+            <button className="btn-ghost" onClick={onExit} style={{ padding:'8px 12px', fontSize:'.8rem' }}>✕ Salir</button>
+            <div style={{ textAlign:'center' }}>
+              <p className="font-magic" style={{ color:'#C4933A', fontSize:'.65rem', letterSpacing:'2px', margin:0 }}>{mission.titulo}</p>
+              <p style={{ color:'#7B1B1B', fontSize:'.9rem', fontWeight:700, margin:'2px 0 0' }}>
+                {problem.icono} Problema {problemIndex + 1} de {mission.problems.length}
+              </p>
+            </div>
+            <div style={{ width:'80px' }} />
+          </div>
+
+          <div style={{ textAlign:'center' }}>
+            <h3 className="font-magic" style={{ color:'#7B1B1B', fontSize:'1.1rem', margin:0 }}>{problem.titulo}</h3>
+            <span style={{ fontSize:'.72rem', fontWeight:700, letterSpacing:'1.5px', color:'#3B82F6',
+              background:'rgba(59,130,246,.1)', border:'1px solid rgba(59,130,246,.35)',
+              borderRadius:'20px', padding:'3px 10px', display:'inline-block', marginTop:'4px' }}>
+              🔍 Gráficas y tablas
+            </span>
+          </div>
+
+          {/* Ingredient dots */}
+          <div style={{ display:'flex', justifyContent:'center', gap:'8px', alignItems:'center' }}>
+            {(problem.ingredientes || []).map((ing, i) => (
+              <div key={i} style={{
+                width:'38px', height:'38px', borderRadius:'50%',
+                background: ingredientes.has(i) ? `radial-gradient(circle,${ing.color}55,${ing.color}18)` : 'rgba(59,130,246,.08)',
+                border: `2px solid ${ingredientes.has(i) ? ing.color : 'rgba(59,130,246,.2)'}`,
+                display:'flex', alignItems:'center', justifyContent:'center',
+                fontSize: ingredientes.has(i) ? '1.2rem' : '.9rem',
+                filter: ingredientes.has(i) ? 'none' : 'grayscale(1)',
+                transition:'all .4s',
+              }}>{ingredientes.has(i) ? ing.emoji : '?'}</div>
+            ))}
+            <span style={{ color:'rgba(123,27,27,.6)', fontSize:'.78rem', marginLeft:'4px' }}>
+              {ingredientes.size}/{totalIngs} ingredientes
+            </span>
+          </div>
+
+          <IngredientSplash visible={splashVisible} faseIdx={splashFaseIdx} problemIngredientes={problem.ingredientes} />
+
+          <StepDia13 problem={problem} onIngrediente={handleDia13Ingrediente} onComplete={handleDia13Complete} />
+        </div>
+      </Wrap>
+    );
+  }
+  // ── End Día 13 fast-path ─────────────────────────────────
+
   return (
     <Wrap>
       <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
@@ -7505,7 +8104,7 @@ function CelebrationScreen({ mission, problemIndex, onNext, isLast, potionComple
 // ═══════════════════════════════════════════════════════
 
 function MissionCompleteScreen({ mission, onRepeat, onHome, onViewCollection, potionCompleted }) {
-  const isPocionMision = mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12';
+  const isPocionMision = mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12' || mission.id === 'dia13';
   const allPotionsDone = isPocionMision && potionCompleted && potionCompleted.size >= mission.problems.length;
   const card = MAGIC_CARDS.find(c => c.missionId === mission.id);
   const [showConfetti, setShowConfetti] = React.useState(false);
@@ -7968,8 +8567,8 @@ function CastleSVG({ builtSet }) {
   const stars = [[18,9],[58,14],[148,6],[228,11],[276,19],[42,30],[265,27],[102,26],[192,8]];
 
   // Patio: 7 edificios pequeños, x = 5 + i*42, width=34
-  const patioIds = ['sala-brujula','sala-balanza','sala-compas','gran-biblioteca','sala-varitas','observatorio','sala-caldero'];
-  const patioLabels = ['Brújula','Balanza','Compases','Biblioteca','Varitas','Observatorio','Caldero'];
+  const patioIds = ['sala-brujula','sala-balanza','sala-compas','gran-biblioteca','sala-varitas','observatorio','sala-caldero','sala-datos'];
+  const patioLabels = ['Brújula','Balanza','Compases','Biblioteca','Varitas','Observatorio','Caldero','Datos'];
 
   return (
     <svg viewBox="0 0 300 338" xmlns="http://www.w3.org/2000/svg"
@@ -8128,6 +8727,7 @@ function CastleScreen({ onBack }) {
     const showM3   = newCount === 3;
     const showM5   = newCount === 5;
     const showM12  = newCount === 12;
+    const showM13  = newCount === 13;
     return (
       <Wrap>
         <div className="anim-fadeIn" style={{ display:'flex', flexDirection:'column', gap:'20px', alignItems:'center', textAlign:'center', paddingTop:'16px' }}>
@@ -8143,14 +8743,14 @@ function CastleScreen({ onBack }) {
               </p>
             </div>
           </div>
-          {(showM3 || showM5 || showM12) && (
+          {(showM3 || showM5 || showM12 || showM13) && (
             <div className="anim-scaleIn" style={{ background:'linear-gradient(135deg,#1A1240,#242060)', border:'2px solid #9B6BE8', borderRadius:'14px', padding:'16px 18px', width:'100%', textAlign:'center' }}>
               <p style={{ color:'#C4A8F8', fontSize:'.68rem', letterSpacing:'2px', margin:'0 0 6px' }}>🌟 LOGRO ESPECIAL</p>
               <p className="font-magic" style={{ color:'#E8D8FF', fontSize:'1.05rem', margin:'0 0 4px' }}>
-                {showM12 ? '¡Castillo completamente construido!' : showM5 ? '¡Patio del Castillo desbloqueado!' : '¡Sala de los Primeros Hechizos!'}
+                {showM13 ? '¡Sala de los Datos desbloqueada!' : showM12 ? '¡Castillo completamente construido!' : showM5 ? '¡Patio del Castillo desbloqueado!' : '¡Sala de los Primeros Hechizos!'}
               </p>
               <p style={{ color:'#C4A8F8', fontSize:'.83rem', margin:0 }}>
-                {showM12 ? '¡Has completado todas las piezas! ¡Eres la gran maga del castillo!' : showM5 ? '¡El patio del castillo empieza a brillar!' : 'Has desbloqueado un secreto del castillo.'}
+                {showM13 ? '¡Ahora puedes leer gráficas y tablas como una experta!' : showM12 ? '¡Has completado todas las piezas! ¡Eres la gran maga del castillo!' : showM5 ? '¡El patio del castillo empieza a brillar!' : 'Has desbloqueado un secreto del castillo.'}
               </p>
             </div>
           )}
@@ -8507,7 +9107,7 @@ function App() {
   function selectMission(m) { setMission(m); setProbIdx(0); setPotionCompleted(new Set()); setScreen('intro'); }
   function beginProblems()  { setProbIdx(0); setPotionCompleted(new Set()); setScreen('problem'); }
   function problemDone() {
-    if (mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12') {
+    if (mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12' || mission.id === 'dia13') {
       setScreen('mesa-pociones');
     } else {
       setScreen('celebration');
@@ -8546,7 +9146,7 @@ function App() {
       {screen === 'problem'      && <ProblemScreen       key={`${mission.id}-${probIdx}`} mission={mission} problemIndex={probIdx} onComplete={problemDone} onExit={() => setScreen('select')} onPotionComplete={onPotionComplete} />}
       {screen === 'celebration'  && <CelebrationScreen   mission={mission} problemIndex={probIdx} isLast={probIdx + 1 >= mission.problems.length} onNext={afterCelebration} potionCompleted={potionCompleted} />}
       {screen === 'mesa-pociones'&& <PotionWorkbenchScreen mission={mission} problemIndex={probIdx} onContinue={afterMesaPociones} />}
-      {screen === 'reward'       && (mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12')
+      {screen === 'reward'       && (mission.id === 'dia8' || mission.id === 'dia9' || mission.id === 'dia10' || mission.id === 'dia11' || mission.id === 'dia12' || mission.id === 'dia13')
         ? <MissionCompleteScreen mission={mission} onRepeat={beginProblems} onHome={home} onViewCollection={() => setScreen('collection')} potionCompleted={potionCompleted} />
         : screen === 'reward' && <RewardScreen missionId={mission.id} onViewCollection={() => setScreen('collection')} onHome={home} />}
       {screen === 'collection'   && <CollectionScreen    onBack={() => setScreen('home')} onCastle={() => setScreen('castle')} />}
